@@ -1,6 +1,5 @@
-import rpy2.robjects as ro
-
-repo = '/home/pawel/projects/cenatorium/cenatorium-avm'
+from readers.Reader import Reader
+from runners.R import R
 
 elements = [
     'Ini.r',
@@ -10,15 +9,16 @@ elements = [
     '21_slave_predict.r',
     'eval.r']
 
-source = {}
-for elem in elements:
-  with open('%s/%s' % (repo, elem), 'r') as f:
-    source[elem] = f.read()
-    print "Read [%s], size=%s" % (elem, len(source[elem]))
+work_dir = '/home/pawel/projects/cenatorium/cenatorium-avm'
+reader = Reader(work_dir)
+r = R(work_dir)
 
-ro.r('setwd("%s")' % repo)
-ro.r('args = c(getwd(), "sessionID")')
+# What is my working dir?
+# Is there dataflows.yml? no -> this is not dataflows project
+
+r.run_code('setwd("%s")' % work_dir)
+r.run_code('rm(list=ls(all=TRUE))')
 
 for elem in elements:
-  print "Running [%s]" % elem
-  ro.r(source[elem])
+  code = reader.read(elem)
+  r.run_code(code)
