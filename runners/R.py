@@ -10,4 +10,4 @@ class R:
 
   def get_variable(self, variable):
     """Read variable value from the current R scope"""
-    pass
+    return ro.globalenv[variable][0]
