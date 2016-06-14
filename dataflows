@@ -1,3 +1,2 @@
 #!/bin/bash
-
-python dataflows.py $@
+python $DATAFLOWS_DIR/dataflows.py $@
