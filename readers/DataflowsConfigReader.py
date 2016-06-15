@@ -2,7 +2,7 @@ import yaml
 import os
 from FileReader import FileReader
 
-class ConfigReader(FileReader):
+class DataflowsConfigReader(FileReader):
 
   name = 'dataflows.yml'
 
