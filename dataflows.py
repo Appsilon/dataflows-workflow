@@ -11,7 +11,7 @@ from version import dataflows_version
 config = DataflowsConfigReader().get_config()
 args = ArgsReader(config['run']['args'], config['steps_options']).parse_args()
 
-DEBUG = DEBUG
+DEBUG = args['debug']
 
 if args['version']:
   print "Dataflows version: %s" % dataflows_version
