@@ -1,0 +1,2 @@
+#!/bin/bash
+python $DATAFLOWS_DIR/dataflows.py $@
