@@ -60,4 +60,4 @@ results = {
   "values": dict((var, r.get_variable(var)) for var in config['run']['output']['vars'])
 }
 
-print json.dumps(results)
+print "<dataflows>%s</dataflows>" % json.dumps(results)
