@@ -6,7 +6,7 @@ if [ -e $DATAFLOWS_DIR ]; then
     ln -s $DATAFLOWS_DIR /usr/bin/dataflows
 else 
     echo "Dataflows executable does not exist"
-    exit(1)
+    exit 1
 fi 
 
 
