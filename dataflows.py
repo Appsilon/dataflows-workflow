@@ -14,8 +14,7 @@ args = ArgsReader(config['run'].get('args', []), config.get('steps_options', {})
 DEBUG = args['debug']
 
 if args['version']:
-  print "Dataflows version: %s" % dataflows_version
-  print
+  print("Dataflows version: %s\n" % dataflows_version)
   exit(0)
 if args['config']:
   print "<dataflows>%s</dataflows>" % json.dumps(config)
@@ -35,7 +34,7 @@ r.run_code('rm(list=ls(all=TRUE))')
 
 for argument in config['run']['args']:
   new_variable_expr = '%s = "%s"' % (argument, args[argument])
-  if DEBUG: print "Adding new variable to scope: %s" % new_variable_expr
+  if DEBUG: print("Adding new variable to scope: %s" % new_variable_expr)
   r.run_code(new_variable_expr)
 
 # Executing workflow steps.
@@ -47,7 +46,7 @@ for step in config['run']['steps']:
   if is_selectable_step:
     step = step[1:]
     step_source_file = config['steps_options'][step][args[step]]
-  if DEBUG: print "Reading %s" % step_source_file
+  if DEBUG: print("Reading %s" % step_source_file)
   step_sources.append(reader.read(step_source_file))
 
 for step_src in step_sources:
@@ -60,4 +59,4 @@ results = {
   "values": dict((var, r.get_variable(var)) for var in config['run']['output'].get('vars',[]))
 }
 
-print "<dataflows>%s</dataflows>" % json.dumps(results)
+print("<dataflows>%s</dataflows>" % json.dumps(results))
