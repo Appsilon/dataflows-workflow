@@ -1,11 +1,19 @@
+
+# Dependencies
+
+Dataflows requirements:
+* python3.5
+* python3.5-dev
+* pip3.5
+
 # Installation
+
+* set environment variable `export DATAFLOWS_DIR=[absolute path to dataflows dir]`
+* `sudo ./install.sh`
 
 ## Mac OS X
 
 In case of problems with rpy2 library, please look at: https://gist.github.com/nickgravish/7ab136fc3bcbbac8316b
-
-* set environment variable `export DATAFLOWS_DIR=[absolute path to dataflows dir]`
-* `./install.sh`
 
 # Running
 
