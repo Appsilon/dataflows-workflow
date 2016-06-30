@@ -18,7 +18,7 @@ if args['version']:
   print
   exit(0)
 if args['config']:
-  print json.dumps(config)
+  print "<dataflows>%s</dataflows>" % json.dumps(config)
   exit(0)
 
 reader = FileReader()
