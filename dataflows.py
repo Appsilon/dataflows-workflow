@@ -9,7 +9,7 @@ from version import dataflows_version
 
 
 config = DataflowsConfigReader().get_config()
-args = ArgsReader(config['run']['args'], config['steps_options']).parse_args()
+args = ArgsReader(config['run'].get('args', []), config.get('steps_options', {})).parse_args()
 
 DEBUG = args['debug']
 
@@ -56,8 +56,8 @@ for step_src in step_sources:
 # Reading results
 
 results = {
-  "files": ["%s/%s" % (working_directory, output_file) for output_file in config['run']['output']['files']],
-  "values": dict((var, r.get_variable(var)) for var in config['run']['output']['vars'])
+  "files": ["%s/%s" % (working_directory, output_file) for output_file in config['run']['output'].get('files',[])],
+  "values": dict((var, r.get_variable(var)) for var in config['run']['output'].get('vars',[]))
 }
 
 print "<dataflows>%s</dataflows>" % json.dumps(results)
