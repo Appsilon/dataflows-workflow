@@ -15,7 +15,7 @@ class ArgsReader:
     self.parser.add_argument("-c", "--config", action="store_true", help="parse dataflows.yml and return config object", required=False)
     self.parser.add_argument("-d", "--debug", action="store_true", help="show debug messages", required=False)
     self.parser.add_argument("-v", "--version", action="store_true", help="show Dataflows version", required=False)
-    
+
     for step, options in self.steps.items():
       self.parser.add_argument("--%s" % step, help=step, type=int, choices=range(len(options)), default=0)
     

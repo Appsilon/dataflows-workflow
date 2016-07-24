@@ -8,7 +8,7 @@
 # Installation
 
 * Install dependencies
-  * For Ubuntu: `sudo ./install-ubuntu-dependencies.sh`
+  * For Ubuntu: `sudo ./install/install-ubuntu-dependencies.sh`
 * Install Dataflows: `cd [dataflows-dir] && sudo ./install.sh` or `sudo ./install.sh [path-to-dataflows-dir]`
 
 ## Mac OS X
