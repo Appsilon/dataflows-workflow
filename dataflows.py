@@ -1,33 +1,37 @@
 import os
 import json
 
-from readers.FileReader import FileReader
 from readers.DataflowsConfigReader import DataflowsConfigReader
 from readers.ArgsReader import ArgsReader
 from runners.R import R
 from version import dataflows_version
 from workflow import Workflow
 
+config = DataflowsConfigReader()
+args = ArgsReader(config)
 
-config = DataflowsConfigReader().get_config() # TODO get run/steps powinno byc w DataflowsConfigReader
-args = ArgsReader(config.get('run', {}).get('args', []), config.get('steps_options', {})).parse_args()
+def print_in_dataflows_tag(data):
+  print("<dataflows>%s</dataflows>" % data)
 
-DEBUG = args['debug']
-
-if args['version']:
+if args.show_version():
   print("Dataflows version: %s\n" % dataflows_version)
   exit(0)
 
-if args['config']:
-  print("<dataflows>%s</dataflows>" % json.dumps(config))
+if args.show_config():
+  print_in_dataflows_tag(config.get_json())
   exit(0)
 
-working_directory = os.path.realpath('.')
-r_session = R(working_directory)
+if args.show_release():
+  print("Project release: %s" % config.get_release())
+  exit(0)
 
-workflow = Workflow(r_session, FileReader(), DEBUG)
-workflow.add_variables_to_scope(config['run']['args'], args)
-workflow.run(config['run']['steps'], config['steps_options'], args)
-results = workflow.results(config['run']['output'])
-
-print("<dataflows>%s</dataflows>" % json.dumps(results))
+if not args.workflow():
+  print("No workflow chosen. Type `dataflows -h` to view available workflows")
+  exit(0)
+else:
+  working_directory = os.path.realpath('.')
+  r_session = R(working_directory)
+  workflow = Workflow(args.workflow(), config, args, r_session)
+  workflow.run()
+  results = workflow.results(config.get_workflow_config(args.workflow()).get('output', {}))
+  print_in_dataflows_tag(json.dumps(results))
