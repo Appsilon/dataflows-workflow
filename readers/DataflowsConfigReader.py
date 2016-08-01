@@ -40,3 +40,7 @@ class DataflowsConfigReader(FileReader):
   def get_workflow_args(self, workflow_name):
     workflow_config = self.get_workflow_config(workflow_name)
     return workflow_config.get("args", [])
+
+  def get_workflow_output(self, workflow_name):
+    workflow_config = self.get_workflow_config(workflow_name)
+    return workflow_config.get("output", [])

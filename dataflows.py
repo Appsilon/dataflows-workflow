@@ -33,5 +33,5 @@ else:
   r_session = R(working_directory)
   workflow = Workflow(args.workflow(), config, args, r_session)
   workflow.run()
-  results = workflow.results(config.get_workflow_config(args.workflow()).get('output', {}))
+  results = workflow.results()
   print_in_dataflows_tag(json.dumps(results))

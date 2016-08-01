@@ -6,12 +6,14 @@ class Workflow:
   debug = False
   workflow_args = dict()
   workflow_steps = list()
+  workflow_output = list()
 
   def __init__(self, workflow_name, config, args, r_session):
     self.r_session = r_session
     self.debug = args.debug_mode()
     self.prepare_args(workflow_name, config, args)
     self.prepare_steps(workflow_name, config, args)
+    self.workflow_output = config.get_workflow_output(workflow_name)
     self.r_session.run_code('rm(list=ls(all=TRUE))')
 
   def prepare_args(self, workflow_name, config, args):
@@ -47,8 +49,7 @@ class Workflow:
     self.add_variables_to_scope()
     self.run_steps()
 
-  def results(self, output_config):
+  def results(self):
     return {
-      "files": ["%s/%s" % (working_directory, output_file) for output_file in output_config.get('files',[])],
-      "values": dict((var, self.r_session.get_variable(var)) for var in output_config.get('vars',[]))
+      "values": dict((var, self.r_session.get_variable(var)) for var in self.workflow_output)
     }
