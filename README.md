@@ -1,15 +1,15 @@
 
 # Dependencies
 
-Dataflows requirements:
 * python3.5
 * python3.5-dev
 * pip3.5
 
 # Installation
 
-* set environment variable `export DATAFLOWS_DIR=[absolute path to dataflows dir]`
-* `sudo ./install.sh`
+* Install dependencies
+  * For Ubuntu: `sudo ./install/install-ubuntu-dependencies.sh`
+* Install Dataflows: `cd [dataflows-dir] && sudo ./install.sh` or `sudo ./install.sh [path-to-dataflows-dir]`
 
 ## Mac OS X
 
