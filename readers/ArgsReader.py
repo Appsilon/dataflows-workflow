@@ -31,7 +31,7 @@ class ArgsReader:
       for argument in self.config.get_workflow_args(workflow_name):
         if argument in self.restricted_arg_names:
           raise Exception("You can't use `%s` for argument name in dataflows.yml" % argument)
-        subparser.add_argument(argument, help=argument, default=None)
+        subparser.add_argument("--%s" % argument, help=argument, default=None)
     
     return vars(self.parser.parse_args())
 
