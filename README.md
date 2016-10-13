@@ -5,6 +5,11 @@
 * python3.5-dev
 * pip3.5
 
+```
+sudo apt-get install python3.5 python3.5-dev python3-pip
+sudo ln -s /usr/bin/pip3 /usr/bin/pip3.5
+```
+
 # Installation
 
 * Install dependencies

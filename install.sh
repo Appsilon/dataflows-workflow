@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o nounset -o errexit
 
 if [ -n "$1" ]; then
   DATAFLOWS_DIR=$1
