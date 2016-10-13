@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o nounset -o errexit
 
 echo "Installing dataflows from directory: '$DATAFLOWS_DIR'"
 

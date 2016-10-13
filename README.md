@@ -6,6 +6,11 @@ Dataflows requirements:
 * python3.5-dev
 * pip3.5
 
+```
+sudo apt-get install python3.5 python3.5-dev python3-pip
+sudo ln -s /usr/bin/pip3 /usr/bin/pip3.5
+```
+
 # Installation
 
 * set environment variable `export DATAFLOWS_DIR=[absolute path to dataflows dir]`
