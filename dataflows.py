@@ -11,7 +11,7 @@ config = DataflowsConfigReader()
 args = ArgsReader(config)
 
 def print_in_dataflows_tag(data):
-  print("<dataflows>%s</dataflows>" % data)
+  print("%s" % data)
 
 if args.show_version():
   print("Dataflows version: %s\n" % dataflows_version)
@@ -34,4 +34,4 @@ else:
   workflow = Workflow(args.workflow(), config, args, r_session)
   workflow.run()
   results = workflow.results()
-  print_in_dataflows_tag(json.dumps(results))
+  print_in_dataflows_tag(json.dumps(results, sort_keys=True, indent=4, separators=(',', ': ')))
