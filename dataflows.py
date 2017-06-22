@@ -11,7 +11,7 @@ config = DataflowsConfigReader()
 args = ArgsReader(config)
 
 def print_in_dataflows_tag(data):
-  print("%s" % data)
+  print("<dataflows>%s</dataflows>" % data)
 
 if args.show_version():
   print("Dataflows version: %s\n" % dataflows_version)
