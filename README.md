@@ -1,7 +1,6 @@
 
 # Dependencies
 
-Dataflows requirements:
 * python3.5
 * python3.5-dev
 * pip3.5
@@ -13,8 +12,11 @@ sudo ln -s /usr/bin/pip3 /usr/bin/pip3.5
 
 # Installation
 
-* set environment variable `export DATAFLOWS_DIR=[absolute path to dataflows dir]`
-* `sudo ./install.sh`
+* Install dependencies
+  * For Ubuntu: `sudo ./install/install-ubuntu-dependencies.sh`
+* Install Dataflows:
+  * `cd [dataflows-dir] && sudo ./install.sh`
+  * or `sudo ./install.sh [path-to-dataflows-dir]`
 
 ## Mac OS X
 
@@ -22,11 +24,13 @@ In case of problems with rpy2 library, please look at: https://gist.github.com/n
 
 # Running
 
-* Help: `dataflows -h`
+* Run workflow: `dataflows [workflow] [args...]`
+* Workflow help: `dataflows [workflow] -h`
+* General help: `dataflows -h`
 * Show parsed dataflows.yml: `dataflows -c`
 * Show version: `dataflows -v`
-* Run workflow with default arguments: `dataflows` in the project dir (dataflows.yml must be present!)
 
-Example:
+Examples:
 
-`dataflows --model_parameters=1 --data=3 --sessionId=my_session`
+* `dataflows train --model_parameters=1 --data=3 --sessionId=my_session`
+* `dataflows predict --pathRData=/code/.RData --pathPredictionData=/code/input/data.csv`

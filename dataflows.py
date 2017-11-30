@@ -1,62 +1,37 @@
 import os
 import json
 
-from readers.FileReader import FileReader
 from readers.DataflowsConfigReader import DataflowsConfigReader
 from readers.ArgsReader import ArgsReader
 from runners.R import R
 from version import dataflows_version
+from workflow import Workflow
 
+config = DataflowsConfigReader()
+args = ArgsReader(config)
 
-config = DataflowsConfigReader().get_config()
-args = ArgsReader(config['run'].get('args', []), config.get('steps_options', {})).parse_args()
+def print_in_dataflows_tag(data):
+  print("<dataflows>%s</dataflows>" % data)
 
-DEBUG = args['debug']
-
-if args['version']:
+if args.show_version():
   print("Dataflows version: %s\n" % dataflows_version)
   exit(0)
-if args['config']:
-  print("<dataflows>%s</dataflows>" % json.dumps(config))
+
+if args.show_config():
+  print_in_dataflows_tag(config.get_json())
   exit(0)
 
-reader = FileReader()
+if args.show_release():
+  print("Project release: %s" % config.get_release())
+  exit(0)
 
-working_directory = os.path.realpath('.')
-r = R(working_directory)
-
-# Initialization.
-
-r.run_code('setwd("%s")' % working_directory)
-r.run_code('rm(list=ls(all=TRUE))')
-
-# Adding arguments to scope.
-
-for argument in config['run']['args']:
-  new_variable_expr = '%s = "%s"' % (argument, args[argument])
-  if DEBUG: print("Adding new variable to scope: %s" % new_variable_expr)
-  r.run_code(new_variable_expr)
-
-# Executing workflow steps.
-
-step_sources = []
-for step in config['run']['steps']:
-  step_source_file = step
-  is_selectable_step = step[0] == '$'
-  if is_selectable_step:
-    step = step[1:]
-    step_source_file = config['steps_options'][step][args[step]]
-  if DEBUG: print("Reading %s" % step_source_file)
-  step_sources.append(reader.read(step_source_file))
-
-for step_src in step_sources:
-  r.run_code(step_src)
-
-# Reading results
-
-results = {
-  "files": ["%s/%s" % (working_directory, output_file) for output_file in config['run']['output'].get('files',[])],
-  "values": dict((var, r.get_variable(var)) for var in config['run']['output'].get('vars',[]))
-}
-
-print("<dataflows>%s</dataflows>" % json.dumps(results))
+if not args.workflow():
+  print("No workflow chosen. Type `dataflows -h` to view available workflows")
+  exit(0)
+else:
+  working_directory = os.path.realpath('.')
+  r_session = R(working_directory)
+  workflow = Workflow(args.workflow(), config, args, r_session)
+  workflow.run()
+  results = workflow.results()
+  print_in_dataflows_tag(json.dumps(results, sort_keys=True, indent=4, separators=(',', ': ')))
