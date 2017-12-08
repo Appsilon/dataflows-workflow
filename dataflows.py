@@ -30,8 +30,8 @@ if not args.workflow():
   exit(0)
 else:
   working_directory = os.path.realpath('.')
-  r_session = R(working_directory)
-  workflow = Workflow(args.workflow(), config, args, r_session)
+  session = R(working_directory)
+  workflow = Workflow(args.workflow(), config, args, session)
   workflow.run()
   results = workflow.results()
   print_in_dataflows_tag(json.dumps(results, sort_keys=True, indent=4, separators=(',', ': ')))

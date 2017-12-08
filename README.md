@@ -22,6 +22,8 @@ sudo ln -s /usr/bin/pip3 /usr/bin/pip3.5
 
 In case of problems with rpy2 library, please look at: https://gist.github.com/nickgravish/7ab136fc3bcbbac8316b
 
+Try running: `env CC=/usr/local/Cellar/gcc/7.2.0/bin/gcc-7 ./install.sh`
+
 # Running
 
 * Run workflow: `dataflows [workflow] [args...]`

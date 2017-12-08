@@ -26,7 +26,7 @@ class ArgsReader:
       for step, options in self.config.get_workflow_steps_options(workflow_name).items():
         if step in self.restricted_arg_names:
           raise Exception("You can't use `%s` for argument name in dataflows.yml" % step)
-        subparser.add_argument("--%s" % step, help=step, type=str, choices=options.keys(), required = True)
+        subparser.add_argument("--%s" % step, help=step, type=str, choices=options, required = True)
       
       for argument in self.config.get_workflow_args(workflow_name):
         if argument in self.restricted_arg_names:
